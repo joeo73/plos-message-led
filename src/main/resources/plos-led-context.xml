@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+~ $HeadURL: http://ambraproject.org/svn/plos/plos-tweetstream/head/src/main/resources/tweetstream-context.xml $
+~ $Id: tweetstream-context.xml 9031 2012-02-09 18:13:48Z josowski $
+~
+~ Copyright: Public Library of Science
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+  <bean id="placeholderConfig"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations">
+      <list>
+        <value>classpath:message-led.properties</value>
+        <value>file:/etc/message-led/message-led.properties</value>
+      </list>
+    </property>
+    <property name="ignoreResourceNotFound" value="true"/>
+    <property name="nullValue" value=""/>
+    <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+  </bean>
+  <!-- services -->
+
+  <bean id="config" class="org.plos.messageled.Config">
+    <property name="messageCount" value="${messageCount}" />
+    <property name="waitTime" value="${waitTime}" />
+    <property name="profaneWords" value="${profaneWords}" />
+    <property name="couchDB" value="${couchDB}" />
+    <property name="couchHost" value="${couchHost}"/>
+    <property name="stayTime" value="${staytime}"/>
+    <property name="speed" value="${speed}"/>
+    <property name="port" value="${port}"/>
+    <property name="dbDriver" value="${db.driver}"/>
+    <property name="dbUrl" value="${db.url}"/>
+    <property name="dbUsername" value="${db.username}"/>
+    <property name="dbPassword" value="${db.password}"/>
+    <property name="dbQuery" value="${db.query}"/>
+    <property name="dbQueryLimit" value="${db.query.limit}"/>
+  </bean>
+
+  <bean id="messageQueue" class="org.plos.messageled.services.MessageQueueImpl" />
+
+  <!--bean id="monitor" class="org.plos.messageled.services.DummyMonitorImpl">
+    <property name="messageQueue" ref="messageQueue"/>
+  </bean-->
+
+  <!--
+    In the future it would be nice if this could be changed to logly or whatever service is tracking logs
+  bean id="monitor" class="org.plos.messageled.services.CouchMonitorImpl">
+    <property name="messageQueue" ref="messageQueue"/>
+    <property name="config" ref="config"/>
+  </bean-->
+
+  <bean id="monitor" class="org.plos.messageled.services.SQLMonitorImpl">
+    <property name="messageQueue" ref="messageQueue"/>
+    <property name="config" ref="config"/>
+  </bean>
+
+  <bean id="updater" class="org.plos.messageled.services.MessageUpdaterImpl">
+    <property name="config" ref="config"/>
+    <property name="messageQueue" ref="messageQueue"/>
+  </bean>
+</beans>
