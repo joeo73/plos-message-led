@@ -14,6 +14,7 @@ public class Config {
   private String dbUsername;
   private String dbPassword;
   private String dbQuery;
+  private String solrHost;
   private int dbQueryLimit;
 
   public void setMessageCount(int messageCount) {
@@ -126,5 +127,13 @@ public class Config {
 
   public void setDbQueryLimit(int dbQueryLimit) {
     this.dbQueryLimit = dbQueryLimit;
+  }
+
+  public String getSolrHost() {
+    return solrHost;
+  }
+
+  public void setSolrHost(String solrHost) {
+    this.solrHost = solrHost;
   }
 }

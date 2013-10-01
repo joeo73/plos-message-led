@@ -39,6 +39,7 @@
     <property name="dbPassword" value="${db.password}"/>
     <property name="dbQuery" value="${db.query}"/>
     <property name="dbQueryLimit" value="${db.query.limit}"/>
+    <property name="solrHost" value="${solrHost}"/>
   </bean>
 
   <bean id="messageQueue" class="org.plos.messageled.services.MessageQueueImpl" />
@@ -54,7 +55,12 @@
     <property name="config" ref="config"/>
   </bean-->
 
-  <bean id="monitor" class="org.plos.messageled.services.SQLMonitorImpl">
+  <bean id="sqlMonitor" class="org.plos.messageled.services.SQLMonitorImpl">
+    <property name="messageQueue" ref="messageQueue"/>
+    <property name="config" ref="config"/>
+  </bean>
+
+  <bean id="solrMonitor" class="org.plos.messageled.services.SOLRMonitorImpl">
     <property name="messageQueue" ref="messageQueue"/>
     <property name="config" ref="config"/>
   </bean>

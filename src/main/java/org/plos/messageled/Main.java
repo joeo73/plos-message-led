@@ -36,11 +36,15 @@ public class Main
 
     ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "plos-led-context.xml" });
 
-    MessageMonitor monitor = (MessageMonitor)context.getBean("monitor");
+    MessageMonitor sqlMonitor = (MessageMonitor)context.getBean("sqlMonitor");
+    MessageMonitor solrMonitor = (MessageMonitor)context.getBean("solrMonitor");
     MessageUpdater updater = (MessageUpdater)context.getBean("updater");
 
-    log.info("Starting message monitor");
-    monitor.start();
+    log.info("Starting SQL message monitor");
+    //sqlMonitor.start();
+
+    log.info("Starting SOLR message monitor");
+    solrMonitor.start();
 
     log.info("Starting message updater");
     updater.start();
