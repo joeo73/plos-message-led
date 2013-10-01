@@ -41,7 +41,7 @@ public class Main
     MessageUpdater updater = (MessageUpdater)context.getBean("updater");
 
     log.info("Starting SQL message monitor");
-    //sqlMonitor.start();
+    sqlMonitor.start();
 
     log.info("Starting SOLR message monitor");
     solrMonitor.start();
