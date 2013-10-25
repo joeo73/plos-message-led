@@ -1,11 +1,17 @@
 This application needs to commapi library installed:
 
 export CVSROOT=:pserver:anonymous@qbang.org:/var/cvs/cvsroot
+
 cvs login
+
 CVS password: (blank)
+
 cvs checkout -r commapi-0-0-1 rxtx-devel
+
 cd rxtx-devel
+
 ./configure
+
 sudo make install
 
 CouchDB compact command should be run as a cron:
